@@ -37,6 +37,15 @@ func TestFastRLPHeader(t *testing.T) {
 	assert.DeepEqual(t, header.encodeRLP(), header.encodeFastRLP())
 }
 
+func TestFastSSZHeader(t *testing.T) {
+	e := header.encodeSSZ()
+	h := &Header{}
+	if err := h.UnmarshalSSZ(e); err != nil {
+		panic(err)
+	}
+	assert.DeepEqual(t, h, header)
+}
+
 func BenchmarkRLPHeader(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		header.encodeRLP()
